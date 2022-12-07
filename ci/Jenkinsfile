@@ -1,21 +1,44 @@
 // Pham Minh Tan A01215507, Dec 7th 2022, Jenkins pipeline.
-pipeline{
+pipeline {
     agent any
     parameters {
         booleanParam(defaultValue: false, description: 'Run Unit Tests', name:
         'TEST')
     }
     stages{
-        stage('Build'){
+        stage('Build') {
             steps{
                 echo 'Installing the Python Requirements...'
                 sh 'pip install -r requirements.txt'
                 echo 'Requirement complete.'
             }
         }
-        stage('Code Quantity'){
+        stage('Code Quality') {
+            steps {
+                script {
+                    def files = findFiles(glob: '*.py')
+                    for (file in files){
+                        sh "pylint --fail-under=5 ${file.name}"
+                    }
+                }
+            }
+        }
+        stage('Code Quantity') {
             steps{
                 sh 'ls -l *.py | wc -l'
+            }
+        }
+        stage('Test') {
+            when {
+                expression { params.TEST }
+            }
+            steps {
+                sh 'python3 test_book_manager.py'
+            }
+            post {
+                always {
+                    junit 'test-reports/*.xml'
+                }
             }
         }
     }
