@@ -17,8 +17,8 @@ pipeline {
         stage('Code Quality') {
             steps {
                 script {
-                    def workspace = WORKSPACE.split('/')
-                    echo "${workspace[len(workspace)-1]}"
+                    def workspace = WORKSPACE
+                    echo "${env.JOB_NAME}"
                     sh "cd ..; pylint --fail-under=7 ./4850_final; cd 4850_final"
                 }
             }
