@@ -1,0 +1,17 @@
+// Pham Minh Tan A01215507, Dec 7th 2022, Jenkins pipeline.
+pipeline{
+    agent any
+    parameters {
+        booleanParam(defaultValue: false, description: 'Run Unit Tests', name:
+        'TEST')
+    }
+    stages{
+        stage('Build'){
+            steps{
+                echo 'Installing the Python Requirements...'
+                sh 'pip install -r requirements.txt'
+                echo 'Requirement complete.'
+            }
+        }
+    }
+}
