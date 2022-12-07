@@ -38,5 +38,17 @@ pipeline {
                 }
             }
         }
+        stage('Package') {
+            steps {
+                steps {
+                    sh 'zip app.zip *.py'
+                }
+                post {
+                    always{
+                        archiveArtifacts artifacts: 'app.zip'
+                    }
+                }
+            }
+        }
     }
 }
