@@ -16,7 +16,8 @@ pipeline {
         stage('Code Quality') {
             steps {
                 script {
-                    sh 'cd ..; pylint --fail-under=7 ./4850_final; cd 4850_final'
+                    def workspace = WORKSPACE
+                    sh "cd ..; pylint --fail-under=7 ./${workspace}; cd ${workspace}"
                 }
             }
         }
