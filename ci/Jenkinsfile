@@ -13,5 +13,10 @@ pipeline{
                 echo 'Requirement complete.'
             }
         }
+        stage('Code Quantity'){
+            steps{
+                sh 'ls -l *.py | wc -l'
+            }
+        }
     }
 }
