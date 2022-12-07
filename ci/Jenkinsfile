@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     def workspace = WORKSPACE
-                    sh "cd ../../..; pylint --fail-under=7 ./; cd ${workspace}"
+                    sh "cd ../../..; pylint --fail-under=7 ${workspace}; cd ${workspace}"
                 }
             }
         }
